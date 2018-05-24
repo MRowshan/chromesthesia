@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+<style>
+    .col-md-8, .col-md-4{padding: 10px} /* Applies padding to these classes */
+
+    input[type=text], input[type=password], input[type=email], select /* CSS for input boxes */
+    {
+        width: 100%;
+        padding: 6px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+<!-- Import ajax library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+// // Load options to age selector
+//     $(document).ready(function()
+//     {
+//         var age = ''; // Create variable to store line in
+//         for (i=1;   i<=100; i++) // Run from 1 to 100 and increment by 1
+//         {
+//             // Creates options 1 to 100 for the selection box
+//             age += '<option value=' + i + '>' + i + '</option>';
+//         }
+//         // Add another option for above 100
+//         age += '<option value=above100> above 100 </option>';
+//         // Append options to select tag
+//         $('#age_selector').html(age);
+//     });
+// // Load the login method in views.py
+    function cancel()
+    {
+        window.location.href = "{% url 'synesthesia:index' %}";
+    }
+// Check that all the fields are completed
+    function checkFields()
+    {
+        // Get value from input box with name 'firstname' in form 'signUp'
+        var firstname = document.forms["signUp"]["firstname"].value;
+        // remove whitespace
+        var fn = firstname.trim();
+        // Get value from input box with name 'surname' in form 'signUp'
+        var surname = document.forms["signUp"]["surname"].value;
+        var sn = surname.trim();
+        // Get value from input box with name 'email' in form 'signUp'
+        var email = document.forms["signUp"]["email"].value;
+        var em = email.trim();
+        // Get value from input box with name 'password' in form 'signUp'
+        var password = document.forms["signUp"]["password"].value;
+        var pw = password.trim();
+        
+        // Check if any of the variables are empty (after removing whitespace)
+        if (fn == "" || sn == "" || em == "" || pw == "")
+        {
+            // Alert message if not complete
+            alert("Please complete all the fields");
+            // Return false so the incomplete form does not get submitted
+            return false;
+        }
+        // Input sanitisation - prevent people signing up with these characters
+        if (fn.match(/[<>''"",!;,:\]\[]/i) || sn.match(/[<>''"",!;,:\]\[]/i) || em.match(/[<>''"",!;,:\]\[]/i) || pw.match(/[<>''"",!;,:\]\[]/i))
+        {
+            alert("Special characters are not allowed")
+            return false;
+        }
+    }
+</script>
+
+<div class="row">
+    <br>
+    <!-- Cancel button with bootstrap icon -->
+    <button type="button" class="btn btn-danger btn-sm homebutton" onclick="cancel()">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <!-- Page header -->
+    <h1 class="page-header mainheader">Sign Up</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Form that uses the function 'signup' in views.py and runs checkFields before submitting -->
+            <form name="signUp" method="POST" action="/signup/" onsubmit="return checkFields()">
+                {% csrf_token %} <!-- CSRF Token to prevent malicious attacks-->
+                <div class="container-fluid" style="text-align: center;">
+                    <div class="form-group">
+                        <!-- Error message shown here if email exists already -->
+                        <div class="row">
+                            <p class="errormessage">{{ error }}</p>
+                        </div>
+                        <!-- First name -->
+                        <div class="row">
+                            <!-- Label -->
+                            <div class="col-md-4">
+                                <h4>First Name</h4>
+                            </div>
+                            <!-- Input box for firstname -->
+                            <div class="col-md-8" style="text-align: center;">
+                                <input class="form-control" type='text' name='firstname' size="35">
+                            </div>
+                        </div>
+                        <!-- Surname -->
+                        <div class="row">
+                            <!-- Label -->
+                            <div class="col-md-4">
+                                <h4>Surname</h4>
+                            </div>
+                            <!-- Input box for surname -->
+                            <div class="col-md-8" style="text-align: center;">
+                                <input class="form-control" type='text' name='surname' size="35">
+                            </div>
+                        </div>
+                        <!-- Email -->
+                        <div class="row">
+                            <!-- Label -->
+                            <div class="col-md-4">
+                                <h4>Email</h4>
+                            </div>
+                            <!-- Input box for email -->
+                            <div class="col-md-8" style="text-align: center;">
+                                <input class="form-control" type='email' name='email' size="35">
+                            </div>
+                        </div>
+                        <!-- Password -->
+                        <div class="row">
+                            <!-- Label -->
+                            <div class="col-md-4">
+                                <h4>Password</h4>
+                            </div>
+                            <!-- Input box for password -->
+                            <div class="col-md-8" style="text-align: center;">
+                                <input class="form-control" type='password' name='password' size="35">
+                            </div>
+                        </div>
+                        <!-- Labels -->
+                        <div class="row">
+                            <div class="col-md-4"><h4>Age</h4></div>
+                            <div class="col-md-4"><h4>Gender</h4></div>
+                            <div class="col-md-4"><h4>Dominant Hand</h4></div>
+                        </div>
+
+                        <!-- Selectors -->
+                        <div class="row">
+                            <!-- Age -->
+                            <div class="col-md-4">
+                                <select class="form-control" name='age' id='age_selector'>
+                                    <option value="0-15">0-15</option>
+                                    <option value="16-25">16-25</option>
+                                    <option value="26-35">26-35</option>
+                                    <option value="36-45">36-45</option>
+                                    <option value="46-55">46-55</option>
+                                    <option value="56-65">56-65</option>
+                                    <option value="65+">65+</option>
+                                </select>
+                            </div>
+                            <!-- Gender -->
+                            <div class="col-md-4">
+                                <select class="form-control" name='gender'>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <!-- Dominant Hand -->
+                            <div class="col-md-4">
+                                <select class="form-control" name='dominanthand'>
+                                    <option value="Right">Right</option>
+                                    <option value="Left">Left</option>
+                                    <option value="Both">Both</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Button to submit form -->
+                        <div class="row">
+                            <div class="btn-group btn-group-lg btn-block">
+                                <button type='submit' class="btn btn-primary btn-block">Create Account</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <p style="text-align: center;">
+                <u><strong>Consent Form</strong></u>
+            </p>
+            <p>
+                Please complete this form after you have read the Information Sheet and/or listened to an explanation about the research.
+                <br><br>
+                <u>Title of Study:</u> Chromesthesia and the association between tone and colour: An exploratory research tool
+                <br>
+                Queen Mary Ethics of Research Committee Ref: 1814
+                <br><br>
+                •   Thank you for considering taking part in this research. The person organizing the research must explain the project to you before you agree to take part. 
+                <br>
+                •   If you have any questions arising from the Information Sheet or explanation already given to you, please ask the researcher before you decide whether to join in. You will be given a copy of this Consent Form to keep and refer to at any time. 
+                <br>
+                •   I understand that if I decide at any other time during the research that I no longer wish to participate in this project, I can notify the researchers involved and be withdrawn from it immediately.
+                <br> 
+                •   I consent to the processing of my personal information for the purposes of this research study. I understand that such information will be treated as strictly confidential and handled in accordance with the provisions of the Data Protection Act 1998. 
+                <br><br>
+                <u>Participant’s Statement:</u> 
+                By signing up I agree that the research project named has been explained to me to my satisfaction and I agree to take part in the study. I have read both the notes written and the Information Sheet about the project, and understand what the research study involves. 
+
+            </p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

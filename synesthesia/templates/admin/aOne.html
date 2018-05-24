@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    button.choice
+    {
+        width:50px;
+        height:100px;
+        float:left;
+        /*margin:5px;*/
+        border:1px solid #000;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- Load ajax library-->
+<script>
+// Load the userhome method in views.py
+    function adminpage()
+    {
+        window.location.href = "{% url 'synesthesia:adminpage' %}";
+    }
+// Load colour choice into buttons
+    $(document).ready(function()
+    {
+        s1  = "{{ getresults.0 }}" // Get value sent from views.py in position 0
+        document.getElementById('sound1').style.backgroundColor  = s1;  // Sound 1
+        s2  = "{{ getresults.1 }}"
+        document.getElementById('sound2').style.backgroundColor  = s2;  // Sound 2
+        s3  = "{{ getresults.2 }}"
+        document.getElementById('sound3').style.backgroundColor  = s3;  // Sound 3
+        s4  = "{{ getresults.3 }}"
+        document.getElementById('sound4').style.backgroundColor  = s4;  // Sound 4
+        s5  = "{{ getresults.4 }}"
+        document.getElementById('sound5').style.backgroundColor  = s5;  // Sound 5
+        s6  = "{{ getresults.5 }}"
+        document.getElementById('sound6').style.backgroundColor  = s6;  // Sound 6
+        s7  = "{{ getresults.6 }}"
+        document.getElementById('sound7').style.backgroundColor  = s7;  // Sound 7
+        s8  = "{{ getresults.7 }}"
+        document.getElementById('sound8').style.backgroundColor  = s8;  // Sound 8
+        s9  = "{{ getresults.8 }}"
+        document.getElementById('sound9').style.backgroundColor  = s9;  // Sound 9
+        s10 = "{{ getresults.9 }}"
+        document.getElementById('sound10').style.backgroundColor = s10; // Sound 10
+        s11 = "{{ getresults.10 }}"
+        document.getElementById('sound11').style.backgroundColor = s11; // Sound 11
+        s12 = "{{ getresults.11 }}"
+        document.getElementById('sound12').style.backgroundColor = s12; // Sound 12
+        s13 = "{{ getresults.12 }}"
+        document.getElementById('sound13').style.backgroundColor = s13; // Sound 13
+        s14 = "{{ getresults.13 }}"
+        document.getElementById('sound14').style.backgroundColor = s14; // Sound 14
+        s15 = "{{ getresults.14 }}"
+        document.getElementById('sound15').style.backgroundColor = s15; // Sound 15
+        s16 = "{{ getresults.15 }}"
+        document.getElementById('sound16').style.backgroundColor = s16; // Sound 16
+        s17 = "{{ getresults.16 }}"
+        document.getElementById('sound17').style.backgroundColor = s17; // Sound 17
+        s18 = "{{ getresults.17 }}"
+        document.getElementById('sound18').style.backgroundColor = s18; // Sound 18
+    });
+// Play audio when buttons are clicked
+    function playSound1() 
+    {
+        audio = document.getElementById("snd1"); // Get audio element
+        audio.play() // Play sound from element
+    }
+    function playSound2() 
+    {
+        audio = document.getElementById("snd2");
+        audio.play()
+    }
+    function playSound3() 
+    {
+        audio = document.getElementById("snd3");
+        audio.play()
+    }
+    function playSound4() 
+    {
+        audio = document.getElementById("snd4");
+        audio.play()
+    }
+    function playSound5() 
+    {
+        audio = document.getElementById("snd5");
+        audio.play()
+    }
+    function playSound6() 
+    {
+        audio = document.getElementById("snd6");
+        audio.play()
+    }
+    function playSound7() 
+    {
+        audio = document.getElementById("snd7");
+        audio.play()
+    }
+    function playSound8() 
+    {
+        audio = document.getElementById("snd8");
+        audio.play()
+    }
+    function playSound9() 
+    {
+        audio = document.getElementById("snd9");
+        audio.play()
+    }
+    function playSound10() 
+    {
+        audio = document.getElementById("snd10");
+        audio.play()
+    }
+    function playSound11() 
+    {
+        audio = document.getElementById("snd11");
+        audio.play()
+    }
+    function playSound12() 
+    {
+        audio = document.getElementById("snd12");
+        audio.play()
+    }
+    function playSound13() 
+    {
+        audio = document.getElementById("snd13");
+        audio.play()
+    }
+    function playSound14() 
+    {
+        audio = document.getElementById("snd14");
+        audio.play()
+    }
+    function playSound15() 
+    {
+        audio = document.getElementById("snd15");
+        audio.play()
+    }
+    function playSound16() 
+    {
+        audio = document.getElementById("snd16");
+        audio.play()
+    }
+    function playSound17() 
+    {
+        audio = document.getElementById("snd17");
+        audio.play()
+    }
+    function playSound18() 
+    {
+        audio = document.getElementById("snd18");
+        audio.play()
+    }
+</script>
+
+<div class="container-fluid">
+    <br>
+    <!-- Home button with bootstrap icon -->
+    <button type="button" class="btn btn-default btn-sm" onclick="adminpage()" style="position: absolute; right: 75px">
+        <span class="glyphicon glyphicon-home"></span> Admin Page
+    </button>
+    <!-- Page header -->
+    <div class="row">
+        <h1 class="page-header" style="text-align: center;">Attempt One Results</h1>
+    </div>
+
+    <div class="row">
+        <!-- Navigation bar -->
+        <div class="col-md-2">
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="{% url 'synesthesia:adminresults' %}">Result</a></li>
+            <li class="active"><a href="{% url 'synesthesia:adminattemptoneResults' %}">Attempt 1</a></li>
+            <li><a href="{% url 'synesthesia:adminattempttwoResults' %}">Attempt 2</a></li>
+          </ul>
+        </div>
+        <!-- Attempt choices -->
+        <br><br><br>
+        <div class="col-md-10 btn-group" role="group">
+            <!-- Sound 1 -->
+            <button type="button" class="btn btn-secondary choice" id="sound1" onclick="playSound1()"></button>
+            <audio id="snd1" style="display: none" src="/static/sound/classic-clean/classic-clean-c5.mp3"></audio>
+            <!-- Sound 2 -->
+            <button type="button" class="btn btn-secondary choice" id="sound2" onclick="playSound2()"></button>
+            <audio id="snd2" style="display: none" src="/static/sound/classic-clean/classic-clean-c2.mp3"></audio>
+            <!-- Sound 3 -->
+            <button type="button" class="btn btn-secondary choice" id="sound3" onclick="playSound3()"></button>
+            <audio id="snd3" style="display: none" src="/static/sound/classic-clean/classic-clean-c0.mp3"></audio>
+            <!-- Sound 4 -->
+            <button type="button" class="btn btn-secondary choice" id="sound4" onclick="playSound4()"></button>
+            <audio id="snd4" style="display: none" src="/static/sound/classic-electric-piano/classic-electric-piano-c6.mp3"></audio>
+            <!-- Sound 5 -->
+            <button type="button" class="btn btn-secondary choice" id="sound5" onclick="playSound5()"></button>
+            <audio id="snd5" style="display: none" src="/static/sound/classic-electric-piano/classic-electric-piano-c3.mp3"></audio>
+            <!-- Sound 6 -->
+            <button type="button" class="btn btn-secondary choice" id="sound6" onclick="playSound6()"></button>
+            <audio id="snd6" style="display: none" src="/static/sound/classic-electric-piano/classic-electric-piano-c0.mp3"></audio>
+            <!-- Sound 7 -->
+            <button type="button" class="btn btn-secondary choice" id="sound7" onclick="playSound7()"></button>
+            <audio id="snd7" style="display: none" src="/static/sound/full-brass/full-brass-c6.mp3"></audio>
+            <!-- Sound 8 -->
+            <button type="button" class="btn btn-secondary choice" id="sound8" onclick="playSound8()"></button>
+            <audio id="snd8" style="display: none" src="/static/sound/full-brass/full-brass-c3.mp3"></audio>
+            <!-- Sound 9 -->
+            <button type="button" class="btn btn-secondary choice" id="sound9" onclick="playSound9()"></button>
+            <audio id="snd9" style="display: none" src="/static/sound/full-brass/full-brass-c0.mp3"></audio>
+            <!-- Sound 10 -->
+            <button type="button" class="btn btn-secondary choice" id="sound10" onclick="playSound10()"></button>
+            <audio id="snd10" style="display: none" src="/static/sound/grand-organ/grand-organ-c6.mp3"></audio>
+            <!-- Sound 11 -->
+            <button type="button" class="btn btn-secondary choice" id="sound11" onclick="playSound11()"></button>
+            <audio id="snd11" style="display: none" src="/static/sound/grand-organ/grand-organ-c3.mp3"></audio>
+            <!-- Sound 12 -->
+            <button type="button" class="btn btn-secondary choice" id="sound12" onclick="playSound12()"></button>
+            <audio id="snd12" style="display: none" src="/static/sound/grand-organ/grand-organ-c1.mp3"></audio>
+            <!-- Sound 13 -->
+            <button type="button" class="btn btn-secondary choice" id="sound13" onclick="playSound13()"></button>
+            <audio id="snd13" style="display: none" src="/static/sound/subby-bass/subby-bass-c8.mp3"></audio>
+            <!-- Sound 14 -->
+            <button type="button" class="btn btn-secondary choice" id="sound14" onclick="playSound14()"></button>
+            <audio id="snd14" style="display: none" src="/static/sound/subby-bass/subby-bass-c6.mp3"></audio>
+            <!-- Sound 15 -->
+            <button type="button" class="btn btn-secondary choice" id="sound15" onclick="playSound15()"></button>
+            <audio id="snd15" style="display: none" src="/static/sound/subby-bass/subby-bass-c3.mp3"></audio>
+            <!-- Sound 16 -->
+            <button type="button" class="btn btn-secondary choice" id="sound16" onclick="playSound16()"></button>
+            <audio id="snd16" style="display: none" src="/static/sound/wedding-organ/wedding-organ-c6.mp3"></audio>
+            <!-- Sound 17 -->
+            <button type="button" class="btn btn-secondary choice" id="sound17" onclick="playSound17()"></button>
+            <audio id="snd17" style="display: none" src="/static/sound/wedding-organ/wedding-organ-c3.mp3"></audio>
+            <!-- Sound 18 -->
+            <button type="button" class="btn btn-secondary choice" id="sound18" onclick="playSound18()"></button>
+            <audio id="snd18" style="display: none" src="/static/sound/wedding-organ/wedding-organ-c0.mp3"></audio>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+</div>
+
+{% endblock %}

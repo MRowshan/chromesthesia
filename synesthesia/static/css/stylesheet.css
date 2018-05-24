@@ -1,0 +1,231 @@
+  /* Page headers */
+  .mainheader
+  {
+    text-align: center; 
+    margin: 10px 0 20px;
+  }
+  /* Home button */
+  .homebutton
+  {
+    position: absolute; 
+    right: 75px;
+  }
+  /* Error messages */
+  .errormessage
+  {
+     color: red;
+  }
+/* --------- welcome.html --------- */
+  /* Position 'CHROMESTHESIA' title in the center of page */
+  .welcomeTitle 
+  {
+    position: absolute;
+    top: 40%;
+    left: 31%;
+  }
+  /* Increase font size and add shadow to title */
+  .welcomeTitleText
+  {
+    font-size: 56px;
+    text-shadow: 3px 3px #000000;
+  }
+  /* Position 'Continue to application' button in the center of page */
+  .welcomeButton
+  {
+    position: absolute; 
+    top:55%; 
+    left: 39%; 
+    width: 20%;
+  }
+  /* CSS button source: https://codepen.io/davidelvar/pen/dYMgrR/ */
+  /* Round the sides of button and make it transparent */
+  .btn-success.rounded
+  {
+    font-size: 13px;
+    color: #00ffff;
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid #00ffff;
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+  }
+  /* Change the look of button when hovered over */
+  .btn-success.rounded:hover
+  {
+    color: #000000;
+    background: #00ffff;
+    border: 2px solid #00ffff;
+  }
+
+/* --------- home.html --------- */
+  /* Position login and logout button on the right side of page */
+  .logInOut
+  {
+    position: absolute; 
+    right: 75px;
+  }
+  /* Position editProfile button on the right side of page, left side of logout button */
+  .editProfile
+  {
+    position: absolute; 
+    right: 175px;
+  }
+  /* Position users firstname to the left of page */
+  .firstname
+  {
+    position: absolute; 
+    left;
+  }
+  /* Position results button to the left of page underneath firstname */
+  .results
+  {
+    position: absolute; 
+    left; 
+    margin-top: 30px
+  }
+  /* Position tabs to right of firstname, left of page */
+  .hometabs
+  {
+    position: absolute; 
+    left: 15%;
+  }
+  /* Position start button on home page to the bottom of page in the center */
+  .startTest
+  {
+    position: absolute; 
+    top: 15%; 
+    right:75px;
+  }
+  .startTestButton
+  {
+    height: 500px;
+    width: 200px;
+    border-radius: 20px;
+  }
+  /* Position information text below tabs */
+  .infotext
+  {
+     position: absolute; 
+     top: 20%; 
+     left: 20%; 
+     max-width: 35%; 
+     text-align: justify-all;
+     font-size: 18px;
+  }
+
+/* --------- Sound pages 0-18 --------- */
+  /* Create rounded squares with a black border */
+  .colour
+  {
+    width:30px;
+    height:30px;
+    float:left;
+    margin:5px;
+    border:2px solid #000000;
+    border-radius: 8px;
+  }
+  /* Assign colours to boxes */
+  /* First row */
+  .div0  {background: #ffffff;}
+  .div0a {background: #c2c2c2;}
+  .div0b {background: #3d3d3d;}
+  .div0c {background: #000000;}
+  /* Second row */
+  .div1a {background: #ffc4c4;}
+  .div3a {background: #ffe5c4;}
+  .div5a {background: #ffffc4;}
+  .div7a {background: #e2ffc4;}
+  .div9a {background: #c4ffc4;}
+  .div11a{background: #c4ffe2;}
+  .div13a{background: #c4ffff;}
+  .div15a{background: #c4e2ff;}
+  .div17a{background: #c4c4ff;}
+  .div19a{background: #e2c4ff;}
+  .div21a{background: #ffc4ff;}
+  .div23a{background: #ffc4e2;}
+  /* Third row */
+  .div1b {background: #ff8989;}
+  .div3b {background: #ffcb89;}
+  .div5b {background: #ffff89;}
+  .div7b {background: #c4ff89;}
+  .div9b {background: #89ff89;}
+  .div11b{background: #89ffc4;}
+  .div13b{background: #89ffff;}
+  .div15b{background: #89c4ff;}
+  .div17b{background: #8989ff;}
+  .div19b{background: #c489ff;}
+  .div21b{background: #ff89ff;}
+  .div23b{background: #ff89c4;}  
+  /* Fourth row */
+  .div1  {background: #ff0000;}
+  .div3  {background: #ff8f00;}
+  .div5  {background: #ffff00;}
+  .div7  {background: #80ff00;}
+  .div9  {background: #00ff00;}
+  .div11 {background: #00ff80;}
+  .div13 {background: #00ffff;}
+  .div15 {background: #0080ff;}
+  .div17 {background: #0000ff;}
+  .div19 {background: #8000ff;}
+  .div21 {background: #ff00ff;}
+  .div23 {background: #ff0080;}
+  /* Fifth row */
+  .div1c {background: #890000;}
+  .div3c {background: #894d00;}
+  .div5c {background: #894d00;}
+  .div7c {background: #458900;}
+  .div9c {background: #008900;}
+  .div11c{background: #008945;}
+  .div13c{background: #008989;}
+  .div15c{background: #004589;}
+  .div17c{background: #000089;}
+  .div19c{background: #450089;}
+  .div21c{background: #890089;}
+  .div23c{background: #890045;}
+  /* Sixth row */
+  .div1d {background: #3b0000;}
+  .div3d {background: #3b2100;}
+  .div5d {background: #3b3b00;}
+  .div7d {background: #1e3b00;}
+  .div9d {background: #003b00;}
+  .div11d{background: #003b1e;}
+  .div13d{background: #003b3b;}
+  .div15d{background: #001e3b;}
+  .div17d{background: #00003b;}
+  .div19d{background: #1e003b;}
+  .div21d{background: #3b003b;}
+  .div23d{background: #3b001e;}
+  /* Page headers */
+  .soundheader
+  {
+    text-align: center;
+  }
+  /* Audio element */
+  .audio
+  {
+    text-align: center;
+  }
+  /* Moving progress bar */
+  .progress
+  {
+    width: 0%; 
+    height: 15px; 
+    border-radius: 100px;
+    background: repeating-linear-gradient(135deg, #402060, #8c53c6 20px, #402060 20px)
+  }
+  /* Static progress bar background */
+  .progressdiv
+  {
+    width: 100%; 
+    background-color: #d3d3d3; 
+    border-radius: 100px;
+  }
+
+/* --------- Sound 0 --------- */
+  .sound0start
+  {
+     position: absolute; 
+     right:75px; 
+     bottom: 13%;
+  }

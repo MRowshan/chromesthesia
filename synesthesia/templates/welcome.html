@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+<style>
+  /* Image source: https://www.pexels.com/photo/red-blue-office-purple-65880/ */
+  body { background-image: url(static/images/colours1.jpeg); }
+</style>
+
+<div class="row welcomeTitle">
+  <p class="welcomeTitleText"><!-- CHROMESTHESIA -->
+    <!-- Colour each letter individually -->
+    <span style="color: #ff0000">C</span><span style="color: #ff8f00">H</span><span style="color: #ffff00">R</span><span style="color: #80ff00">O</span><span style="color: #00ff00">M</span><span style="color: #00ff80">E</span><span style="color: #00ffff">S</span><span style="color: #0080ff">T</span><span style="color: #0000ff">H</span><span style="color: #8000ff">E</span><span style="color: #ff00ff">S</span><span style="color: #ff0080">I</span><span style="color: #ff0000">A</span>
+  </p>
+</div>
+
+<div class="row welcomeButton">
+  {% if loggedin %}
+  <!-- Start button which runs method usersound0 in views.py -->
+  <!-- text-decoration: none; removes underline from link -->
+  <button type="button" class="btn btn-success rounded btn-lg btn-block" onclick="userhome()">Continue to application</button>
+  {% else %}
+  <!-- Start button which runs method sound0 in views.py -->
+  <!-- text-decoration: none; removes underline from link -->
+  <button type="button" class="btn btn-success rounded btn-lg btn-block" onclick="home()">Continue to application</button>
+  {% endif %}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- Load ajax library-->
+<script>
+    function userhome() // Load the index method in views.py
+    {
+        window.location.href = "{% url 'synesthesia:userhome' %}";
+    }
+
+    function home() // Load the index method in views.py
+    {
+        window.location.href = "{% url 'synesthesia:index' %}";
+    }
+  </script>
+
+{% endblock %}

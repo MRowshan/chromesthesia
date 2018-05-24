@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    div.result
+    {
+        border-radius: 100px; 
+        border: 1px solid; 
+        text-align: center; 
+        width: 300px; 
+        position: absolute; 
+        left: 30%
+    }
+
+    button.choice
+    {
+        width:50px;
+        height:100px;
+        float:left;
+        /*margin:5px;*/
+        border:1px solid #000;
+    }
+</style>
+<!-- Load ajax library-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+// Load the userhome method in views.py
+    function adminpage()
+    {
+        window.location.href = "{% url 'synesthesia:adminpage' %}";
+    }
+
+// Load colour choice into buttons
+    $(document).ready(function()
+    {
+        os1  = "{{ getresultsOne.0 }}" // Get value sent from views.py in position 0
+        document.getElementById('osound1').style.backgroundColor  = os1;  // Sound 1
+        os2  = "{{ getresultsOne.1 }}"
+        document.getElementById('osound2').style.backgroundColor  = os2;  // Sound 2
+        os3  = "{{ getresultsOne.2 }}"
+        document.getElementById('osound3').style.backgroundColor  = os3;  // Sound 3
+        os4  = "{{ getresultsOne.3 }}"
+        document.getElementById('osound4').style.backgroundColor  = os4;  // Sound 4
+        os5  = "{{ getresultsOne.4 }}"
+        document.getElementById('osound5').style.backgroundColor  = os5;  // Sound 5
+        os6  = "{{ getresultsOne.5 }}"
+        document.getElementById('osound6').style.backgroundColor  = os6;  // Sound 6
+        os7  = "{{ getresultsOne.6 }}"
+        document.getElementById('osound7').style.backgroundColor  = os7;  // Sound 7
+        os8  = "{{ getresultsOne.7 }}"
+        document.getElementById('osound8').style.backgroundColor  = os8;  // Sound 8
+        os9  = "{{ getresultsOne.8 }}"
+        document.getElementById('osound9').style.backgroundColor  = os9;  // Sound 9
+        os10 = "{{ getresultsOne.9 }}"
+        document.getElementById('osound10').style.backgroundColor = os10; // Sound 10
+        os11 = "{{ getresultsOne.10 }}"
+        document.getElementById('osound11').style.backgroundColor = os11; // Sound 11
+        os12 = "{{ getresultsOne.11 }}"
+        document.getElementById('osound12').style.backgroundColor = os12; // Sound 12
+        os13 = "{{ getresultsOne.12 }}"
+        document.getElementById('osound13').style.backgroundColor = os13; // Sound 13
+        os14 = "{{ getresultsOne.13 }}"
+        document.getElementById('osound14').style.backgroundColor = os14; // Sound 14
+        os15 = "{{ getresultsOne.14 }}"
+        document.getElementById('osound15').style.backgroundColor = os15; // Sound 15
+        os16 = "{{ getresultsOne.15 }}"
+        document.getElementById('osound16').style.backgroundColor = os16; // Sound 16
+        os17 = "{{ getresultsOne.16 }}"
+        document.getElementById('osound17').style.backgroundColor = os17; // Sound 17
+        os18 = "{{ getresultsOne.17 }}"
+        document.getElementById('osound18').style.backgroundColor = os18; // Sound 18
+
+        ts1  = "{{ getresultsTwo.0 }}" // Get value sent from views.py in position 0
+        document.getElementById('tsound1').style.backgroundColor  = ts1;  // Sound 1
+        ts2  = "{{ getresultsTwo.1 }}"
+        document.getElementById('tsound2').style.backgroundColor  = ts2;  // Sound 2
+        ts3  = "{{ getresultsTwo.2 }}"
+        document.getElementById('tsound3').style.backgroundColor  = ts3;  // Sound 3
+        ts4  = "{{ getresultsTwo.3 }}"
+        document.getElementById('tsound4').style.backgroundColor  = ts4;  // Sound 4
+        ts5  = "{{ getresultsTwo.4 }}"
+        document.getElementById('tsound5').style.backgroundColor  = ts5;  // Sound 5
+        ts6  = "{{ getresultsTwo.5 }}"
+        document.getElementById('tsound6').style.backgroundColor  = ts6;  // Sound 6
+        ts7  = "{{ getresultsTwo.6 }}"
+        document.getElementById('tsound7').style.backgroundColor  = ts7;  // Sound 7
+        ts8  = "{{ getresultsTwo.7 }}"
+        document.getElementById('tsound8').style.backgroundColor  = ts8;  // Sound 8
+        ts9  = "{{ getresultsTwo.8 }}"
+        document.getElementById('tsound9').style.backgroundColor  = ts9;  // Sound 9
+        ts10 = "{{ getresultsTwo.9 }}"
+        document.getElementById('tsound10').style.backgroundColor = ts10; // Sound 10
+        ts11 = "{{ getresultsTwo.10 }}"
+        document.getElementById('tsound11').style.backgroundColor = ts11; // Sound 11
+        ts12 = "{{ getresultsTwo.11 }}"
+        document.getElementById('tsound12').style.backgroundColor = ts12; // Sound 12
+        ts13 = "{{ getresultsTwo.12 }}"
+        document.getElementById('tsound13').style.backgroundColor = ts13; // Sound 13
+        ts14 = "{{ getresultsTwo.13 }}"
+        document.getElementById('tsound14').style.backgroundColor = ts14; // Sound 14
+        ts15 = "{{ getresultsTwo.14 }}"
+        document.getElementById('tsound15').style.backgroundColor = ts15; // Sound 15
+        ts16 = "{{ getresultsTwo.15 }}"
+        document.getElementById('tsound16').style.backgroundColor = ts16; // Sound 16
+        ts17 = "{{ getresultsTwo.16 }}"
+        document.getElementById('tsound17').style.backgroundColor = ts17; // Sound 17
+        ts18 = "{{ getresultsTwo.17 }}"
+        document.getElementById('tsound18').style.backgroundColor = ts18; // Sound 18
+    });
+
+// Display text results
+    $(document).ready(function()
+    {
+        var resultPercent = {{ percent }};
+        // Between 0 - 4 matches
+        if (resultPercent < 25)
+        {
+            $("#resultText").empty();
+            $("#resultText").append(
+                "You have between 0 and 4 matches. Study shows that people with chromesthesia are likely to get a higher number of matches. It is unlikely you have chromesthesia, and the matching colours could be due to mental associations of colours with particular sounds.");
+        }
+        // Between 5-10 matches
+        else if (resultPercent < 60)
+        {
+            $("#resultText").empty();
+            $("#resultText").append(
+                "You have between 5 and 10 matches. Study shows that people with chromesthesia are likely to get a higher number of matches. It is unlikely you have chromesthesia, however further tests could be conducted with other forms of synesthesia such as grapheme-colour synesthesia.");
+        }
+        // Between 11-15 matches
+        else if (resultPercent < 80)
+        {
+            $("#resultText").empty();
+            $("#resultText").append(
+                "You have between 11 and 15 matches. Study shows that people with chromesthesia are likely to get a higher number of matches. The likeliness of having chromesthesia is high however, those with chromesthesia report seeing consistent colours for the same sound. Further tests should be conducted or other forms of synesthesia should be looked into, such as grapheme-colour synesthesia.");
+        }
+        // Between 16-18 matches
+        else if (resultPercent <= 100)
+        {
+            $("#resultText").empty();
+            $("#resultText").append(
+                "You have between 16 and 18 matches. Study shows that people with chromesthesia are likely to get a high number of matches. It is likely that you have chromesthesia due to the high number of matches. Chromesthetes experience consistent colours for the same sound and allows them to experience sound differently. If you are still unsure you can retake the test or consider other tests for other forms of synesthesia, such as grapheme-colour synesthesia");
+        }
+        else
+        {
+            $("#resultText").empty();
+            $("#resultText").append(
+                "No result"); 
+        }        
+    });  
+</script>
+
+<div class="container-fluid">
+    <br>
+        <!-- Home button with bootstrap icon -->
+        <button type="button" class="btn btn-default btn-sm" onclick="adminpage()" style="position: absolute; right: 75px">
+            <span class="glyphicon glyphicon-home"></span> Admin Page
+        </button>
+        <!-- Name displayed on the top left corner -->
+        <p style="position: absolute; left"><span class="glyphicon glyphicon-user"></span> {{ firstname }}</p>
+    <!-- Page header -->
+    <div class="row">
+        <h1 class="page-header" style="text-align: center;">Results</h1>
+    </div>
+
+    <div class="row">
+        <!-- Navigation bar -->
+        <div class="col-md-2">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a href="{% url 'synesthesia:adminresults' %}">Result</a></li>
+            <li><a href="{% url 'synesthesia:adminattemptoneResults' %}">Attempt 1</a></li>
+            <li><a href="{% url 'synesthesia:adminattempttwoResults' %}">Attempt 2</a></li>
+          </ul>
+        </div>
+        <!-- Results -->
+        <div class="col-md-8">
+            <!-- Similarity rating -->
+            <div class="result">
+                <h5>Similarity rating:</h5>
+                <h1>{{ percent }}%</h1>
+            </div>
+        </div>
+    </div>
+        <div class="col-md-8 col-md-offset-2">
+            <div>
+                <p id=resultText></p>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Attempt choices -->
+            <br><br><br>
+            <div class="col-md-10 col-md-offset-2 btn-group" role="group">
+                <!-- Sound 1 -->
+                <button type="button" class="btn btn-secondary choice" id="osound1"></button>
+                <!-- Sound 2 -->
+                <button type="button" class="btn btn-secondary choice" id="osound2"></button>
+                <!-- Sound 3 -->
+                <button type="button" class="btn btn-secondary choice" id="osound3"></button>
+                <!-- Sound 4 -->
+                <button type="button" class="btn btn-secondary choice" id="osound4"></button>
+                <!-- Sound 5 -->
+                <button type="button" class="btn btn-secondary choice" id="osound5"></button>
+                <!-- Sound 6 -->
+                <button type="button" class="btn btn-secondary choice" id="osound6"></button>
+                <!-- Sound 7 -->
+                <button type="button" class="btn btn-secondary choice" id="osound7"></button>
+                <!-- Sound 8 -->
+                <button type="button" class="btn btn-secondary choice" id="osound8"></button>
+                <!-- Sound 9 -->
+                <button type="button" class="btn btn-secondary choice" id="osound9"></button>
+                <!-- Sound 10 -->
+                <button type="button" class="btn btn-secondary choice" id="osound10"></button>
+                <!-- Sound 11 -->
+                <button type="button" class="btn btn-secondary choice" id="osound11"></button>
+                <!-- Sound 12 -->
+                <button type="button" class="btn btn-secondary choice" id="osound12"></button>
+                <!-- Sound 13 -->
+                <button type="button" class="btn btn-secondary choice" id="osound13"></button>
+                <!-- Sound 14 -->
+                <button type="button" class="btn btn-secondary choice" id="osound14"></button>
+                <!-- Sound 15 -->
+                <button type="button" class="btn btn-secondary choice" id="osound15"></button>
+                <!-- Sound 16 -->
+                <button type="button" class="btn btn-secondary choice" id="osound16"></button>
+                <!-- Sound 17 -->
+                <button type="button" class="btn btn-secondary choice" id="osound17"></button>
+                <!-- Sound 18 -->
+                <button type="button" class="btn btn-secondary choice" id="osound18"></button>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Attempt choices -->
+            <br><br><br>
+            <div class="col-md-10 col-md-offset-2 btn-group" role="group">
+                <!-- Sound 1 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound1"></button>
+                <!-- Sound 2 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound2"></button>
+                <!-- Sound 3 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound3"></button>
+                <!-- Sound 4 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound4"></button>
+                <!-- Sound 5 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound5"></button>
+                <!-- Sound 6 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound6"></button>
+                <!-- Sound 7 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound7"></button>
+                <!-- Sound 8 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound8"></button>
+                <!-- Sound 9 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound9"></button>
+                <!-- Sound 10 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound10"></button>
+                <!-- Sound 11 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound11"></button>
+                <!-- Sound 12 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound12"></button>
+                <!-- Sound 13 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound13"></button>
+                <!-- Sound 14 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound14"></button>
+                <!-- Sound 15 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound15"></button>
+                <!-- Sound 16 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound16"></button>
+                <!-- Sound 17 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound17"></button>
+                <!-- Sound 18 -->
+                <button type="button" class="btn btn-secondary choice" id="tsound18"></button>
+            </div>
+        </div>
+</div>
+
+{% endblock %}

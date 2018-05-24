@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- Load ajax library-->
+<script>
+// Load the userhome method in views.py
+    function userhome()
+    {
+        window.location.href = "{% url 'synesthesia:userhome' %}";
+    }
+// Check if user has completed Attempt One
+    function checkA()
+    {
+        $.ajax(
+        {
+            type: "POST", // HTTP POST request
+            url: "/checkAttemptA/", // uses function 'checkAttemptA' in views.py
+            dataType: "json", // Json request
+            // Data sent, csrf token for security
+            data: { csrfmiddlewaretoken: '{{csrf_token}}' },
+            // If ajax request is successful, run the function
+            success: function(data)
+            {
+                if (data.text == "Continue") // If variable passed by JsonResponse matches the string 'Continue'
+                {
+                    window.location.href = "{% url 'synesthesia:sound1A' %}";
+                }
+                else // If variable passed by JsonResponse doesn't match the string 'correct'
+                {
+                    // Remove any current elements and replace with error message (prevent multiple of the same message)
+                    $("#errorA").empty()// Empty all child elements from the element with id 'errorA'
+                    $("#errorA").append('<h3>'+data.text+'</h3>');// Add the error message to element with id 'errorA'
+                }
+            }
+        })
+    }
+// Check if user has completed Attempted Two
+    function checkB()
+    {
+        $.ajax(
+        {
+            type: "POST", // HTTP POST request
+            url: "/checkAttemptB/", // uses function 'checkAttemptB' in views.py
+            dataType: "json", // Json request
+            // Data sent, csrf token for security
+            data: { csrfmiddlewaretoken: '{{csrf_token}}' },
+            // If ajax request is successful, run the function
+            success: function(data)
+            {
+                // text = "Continue" if user has completed attemptOne already
+                if (data.text == "Continue") // If variable passed by JsonResponse matches the string 'Continue'
+                {
+                    // Load the first sound page
+                    window.location.href = "{% url 'synesthesia:sound1B' %}";
+                }
+                // text = "Locked" if user has completed attemptOne already but it hasn't been 2 weeks since completion
+                else if (data.text == "Locked") // If variable passed by JsonResponse matches the string 'Locked'
+                {
+                    $("#errorB").empty() // Empty all child elements from the element with id 'errorB'
+                    $("#errorB").append('<h3>Attempt 2 is temporarily unavailable, please return later to complete this attempt</h3>'); // Add the error message to element with id 'errorB'
+                }
+                else
+                {
+                    // Remove any current elements and replace with error message (prevent multiple of the same message)
+                    $("#errorB").empty() // Empty all child elements from the element with id 'errorB'
+                    $("#errorB").append('<h3>'+data.text+'</h3>'); // Add the error message to element with id 'errorB'
+                }
+            }
+        })
+    }
+</script>
+<div class="container-fluid">
+    <br>
+        <!-- Home button with bootstrap icon -->
+        <button type="button" class="btn btn-default btn-sm" onclick="userhome()" style="position: absolute; right: 75px">
+            <span class="glyphicon glyphicon-home"></span> Home
+        </button>
+    <!-- Page header -->
+    <div class="row">
+        <h1 class="page-header" style="text-align: center;">{{ firstname }}, <br> Please Select An Attempt</h1>
+    </div>
+    <!-- Buttons for attempts -->
+    <div class="row">
+        <!-- Attempt One button -->
+        <div class="col-md-6">
+            <button type="submit" class="btn-lg btn-default btn-block btn-info" onclick="checkA()" style="height: 300px">
+                <h3>Attempt One</h3> <!-- Button text -->
+            </button>
+            <!-- Error message loads here -->
+            <div class="row" align="center" id="errorA">
+            </div>
+        </div>
+        <!-- Attempt Two button -->
+        <div class="col-md-6">
+            <button type="submit" class="btn-lg btn-default btn-block btn-warning" onclick="checkB()" style="height: 300px">
+                <h3>Attempt Two</h3> <!-- Button text -->
+            </button>
+            <!-- Error message loads here -->
+            <div class="row" align="center" id="errorB">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

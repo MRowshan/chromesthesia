@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+
+{% if loggedin %} <!-- If user is logged in, run this code -->
+<div class="row">
+  <br>
+  <!-- Buttons on the top right corner -->
+  <!-- Logout button with bootstrap icon -->
+  <button type="button" class="btn btn-default btn-sm logInOut" onclick="logout()">
+      <span class="glyphicon glyphicon-log-out"></span> Log out
+  </button>
+  <!-- Edit profile button with bootstrap icon -->
+  <button type="button" class="btn btn-default btn-sm editProfile" onclick="editProfile()">
+    <span class="glyphicon glyphicon-edit"></span> Edit Profile
+  </button>
+  {% if email == "mustakimrowshan@icloud.com" %}
+    <button type="button" class="btn btn-default btn-sm" onclick="adminpage()" style="position: absolute; right: 115px; top:9%">
+      <span class="glyphicon glyphicon-log-out"></span> Admin Page
+  </button>
+  {% endif %}
+  <!-- Name displayed on the top left corner -->
+  <p class="firstname"><span class="glyphicon glyphicon-user"></span> {{ firstname }}</p>
+  <!-- Results button with bootstrap icon -->
+  <button id="resultsbutton" type="button" class="btn btn-success btn-sm results disabled" onclick="results()">
+    <span class="glyphicon glyphicon-education"></span> Results
+  </button>
+  <!-- Include variable attemptcheck from views.py to be used in JS function results() -->
+  <div id="attemptcheck" style="display: none">{{attemptcheck}}</div>
+</div>
+{% else %} <!-- Else if user is not logged in, run this code -->
+<div class="row">
+  <br>
+  <!-- Buttons on the top right corner -->
+  <!-- Login button with bootstrap icon -->
+  <button type="button" class="btn btn-default btn-sm logInOut" onclick="login()">
+      <span class="glyphicon glyphicon-log-in"></span> Log In
+  </button>
+  <!-- Sign up button with bootstrap icon -->
+  <button type="button" class="btn btn-default btn-sm editProfile" onclick="signup()">
+    <span class="glyphicon glyphicon-plus"></span> Sign Up
+  </button>
+</div>
+{% endif %}
+
+<ul id="homenavbar" class="nav nav-tabs hometabs">
+  <li id="infoSheet" class="active"><a onclick="informationSheet()">Information Sheet</a></li>
+  <li id="purpose" class=""><a onclick="appPurpose()">Purpose of the application</a></li>
+  <li id="about" class=""><a onclick="aboutChromesthesia()">What is Chromesthesia?</a></li>
+  <li id="explanation" class=""><a onclick="appExplanation()">How the application works</a></li>
+</ul>
+
+<div id="informationtext" class="row infotext">
+  <p style='font-size: 60%; text-align: center;'>
+    <u><strong>Research Study</strong></u>
+    <br>
+    Chromesthesia and the association between tone and colour: An exploratory research tool
+    <br><br>
+    <u><strong>Information for Participants</strong></u>
+  </p>
+  <p style='font-size: 60%;'>
+    We would like to invite you to be part of this research project, if you would like to.  You should only agree to take part if you want to, it is entirely up to you. If you choose not to take part there won’t be any disadvantages for you and you will hear no more about it.  [If appropriate: Choosing not to take part will not affect your access to treatment or services in any way].
+    Please read the following information carefully before you decide to take part; this will tell you why the research is being done and what you will be asked to do if you take part. Please ask if there is anything that is not clear or if you would like more information.  
+    If you decide to take part you will be asked to sign the attached form to say that you agree.
+    You are still free to withdraw at any time and without giving a reason.
+  </p>
+    <p style='font-size: 60%; padding-left: 10px'>
+      Synesthetes are people that are conditioned with synesthesia. Synesthesia is a
+      condition, that can involve various combinations of senses, whereby one sense
+      is triggered in response to another sense. Each synesthete may have the
+      condition affect a different combination of senses to another synesthete.
+      Additionally, those with the same type of synesthesia may experience different
+      responses to the same stimuli. This creates the challenge of identifying
+      synesthesia and distinguishing the difference between a synesthetic response
+      to an emotional response.
+      <br><br>
+      This project will be focusing on a specific type of synesthesia known as
+      chromesthesia. Chromesthesia focuses on the combination of the hearing and
+      sight senses.
+      <br><br>
+      The project aims to help with the identification of chromesthesia by taking
+      the user’s visual responses to several auditory stimuli and then repeating the
+      process after a period of time. The results of both tests will provide some
+      indication of whether the user may have synesthesia or not. A synesthete can
+      be expected to produce the same or very similar results over both attempts to
+      most or all the sound clips provided.
+      <br><br>
+      Users are required to sign up and complete a short colour selection process
+      which involves the user listening to a sound and picking a colour.
+      <br><br>
+      There are 18 sounds, originating from 6 different instruments. The users
+      colour selection would be stored in a database. In order for the colour
+      selection to be displayed back to that particular user, they are required to
+      sign up to the website. The sign up process involves the user entering their
+      email, full name, desired password, age, gender, and dominant hand.
+      <br><br>
+      Data collected will be used to identify trends based on the colour selection
+      for each sound.
+      <br><br>
+      This project is important as it allows those with synesthesia to recognise
+      their condition and better understand it. It can be helpful in raising
+      awareness of the condition as those with it may not realise they have it. It
+      is not a life-threatening condition; however, it can be considered
+      life-altering as it changes how someone would experience the world around
+      them.
+    </p>
+  <p style='font-size: 60%'>
+    It is up to you to decide whether or not to take part. If you do decide to take part you will be given this information sheet to keep and be asked to sign a consent form. 
+    <br><br>
+    If you have any questions or concerns about the manner in which the study was conducted please, in the first instance, contact the researcher responsible for the study.  If this is unsuccessful, or not appropriate, please contact the Secretary at the Queen Mary Ethics of Research Committee, Room W104, Queen’s Building, Mile End Campus, Mile End Road, London or research-ethics@qmul.ac.uk.
+  </p>
+</div>
+
+<div class="row startTest">
+  {% if loggedin %}
+  <!-- Start button which runs method usersound0 in views.py -->
+  <button type="button" class="btn btn-primary btn-lg startTestButton" onclick="usound0()">Begin Test</button>
+  {% else %}
+  <!-- Start button which runs method sound0 in views.py -->
+  <button type="button" class="btn btn-primary btn-lg startTestButton" onclick="sound0()">Begin Test</button>
+  {% endif %}
+</div>
+
+<script>
+  // attemptcheck = document.getElementById('attemptcheck').innerHTML;
+  // alert("test" + attemptcheck)
+  // $(document).ready(function()
+  // {
+  //   attemptcheck = document.getElementById('attemptcheck').innerHTML;
+  //   alert(attemptcheck)
+  //   if (attemptcheck == "Complete")
+  //   {
+  //     $('attemptcheck').removeClass("disabled");
+  //   }
+  // })
+  window.onload = function()
+  {
+    attemptcheck = document.getElementById('attemptcheck').innerHTML
+    if (attemptcheck == "Complete")
+    {
+      $("#resultsbutton").removeClass("disabled")
+    }
+  }
+// Load the usersound0 method in views.py
+    function usound0()
+    {
+        window.location.href = "{% url 'synesthesia:usersound0' %}";
+    }
+// Load the sound0 method in views.py
+    function sound0()
+    {
+        window.location.href = "{% url 'synesthesia:sound0' %}";
+    }
+// Load the logout method in views.py
+    function logout()
+    {
+        window.location.href = "{% url 'synesthesia:logout' %}";
+    }
+// Load the editProfile method in views.py
+    function editProfile()
+    {
+        window.location.href = "{% url 'synesthesia:editProfile' %}";
+    }
+// Load the adminpage method in views.py
+    function adminpage()
+    {
+        window.location.href = "{% url 'synesthesia:adminpage' %}";
+    }
+// Load the results method in views.py
+    function results()
+    {
+      attemptcheck = document.getElementById('attemptcheck').innerHTML
+      if (attemptcheck == "Complete")
+      {
+        window.location.href = "{% url 'synesthesia:results' %}";
+      }
+      else
+      {
+        alert("Results page unavailable until both attempts are completed");
+      } 
+    }
+// Load the login method in views.py
+    function login()
+    {
+      window.location.href = "{% url 'synesthesia:login' %}";
+    }
+// Load the signup method in views.py
+    function signup()
+    {
+      window.location.href = "{% url 'synesthesia:signup' %}";
+    }
+// Load Information Sheet tab
+    function informationSheet()
+    {
+      // Remove all active attributes
+      $("#infoSheet").removeClass("active");
+      $("#purpose").removeClass("active");
+      $("#about").removeClass("active");
+      $("#explanation").removeClass("active");
+      // Add active attribute to the currently selected tab
+      $("#infoSheet").addClass("active");
+      // Empty p tag containing information
+      $("#informationtext").empty();
+      // Append p tag with new information
+      $("#informationtext").append(
+        "<p style='font-size: 60%; text-align: center;'>" +
+          "<u><strong>Research Study</strong></u>" +
+          "<br>" +
+          "Chromesthesia and the association between tone and colour: An exploratory research tool" +
+          "<br><br>" +
+          "<u><strong>Information for Participants</strong></u>" +
+        "</p>" +
+        "<p style='font-size: 60%;'>" +
+          "We would like to invite you to be part of this research project, if you would like to.  You should only agree to take part if you want to, it is entirely up to you. If you choose not to take part there won’t be any disadvantages for you and you will hear no more about it.  [If appropriate: Choosing not to take part will not affect your access to treatment or services in any way]. " +
+          "Please read the following information carefully before you decide to take part; this will tell you why the research is being done and what you will be asked to do if you take part. Please ask if there is anything that is not clear or if you would like more information. " +
+          "If you decide to take part you will be asked to sign the attached form to say that you agree." +
+          "You are still free to withdraw at any time and without giving a reason. " +
+        "</p>" +
+          "<p style='font-size: 60%; padding-left: 10px'>" +
+            "Synesthetes are people that are conditioned with synesthesia. Synesthesia is a " +
+            "condition, that can involve various combinations of senses, whereby one sense " +
+            "is triggered in response to another sense. Each synesthete may have the " +
+            "condition affect a different combination of senses to another synesthete. " +
+            "Additionally, those with the same type of synesthesia may experience different " +
+            "responses to the same stimuli. This creates the challenge of identifying " +
+            "synesthesia and distinguishing the difference between a synesthetic response " +
+            "to an emotional response. " +
+            "<br><br>" +
+            "This project will be focusing on a specific type of synesthesia known as " +
+            "chromesthesia. Chromesthesia focuses on the combination of the hearing and " +
+            "sight senses. " +
+            "<br><br>" +
+            "The project aims to help with the identification of chromesthesia by taking " +
+            "the user’s visual responses to several auditory stimuli and then repeating the " +
+            "process after a period of time. The results of both tests will provide some " +
+            "indication of whether the user may have synesthesia or not. A synesthete can " +
+            "be expected to produce the same or very similar results over both attempts to " +
+            "most or all the sound clips provided. " +
+            "<br><br>" +
+            "Users are required to sign up and complete a short colour selection process " +
+            "which involves the user listening to a sound and picking a colour. " +
+            "<br><br>" +
+            "There are 18 sounds, originating from 6 different instruments. The users " +
+            "colour selection would be stored in a database. In order for the colour " +
+            "selection to be displayed back to that particular user, they are required to " +
+            "sign up to the website. The sign up process involves the user entering their " +
+            "email, full name, desired password, age, gender, and dominant hand. " +
+            "<br><br>" +
+            "Data collected will be used to identify trends based on the colour selection " +
+            "for each sound. " +
+            "<br><br>" +
+            "This project is important as it allows those with synesthesia to recognise " +
+            "their condition and better understand it. It can be helpful in raising " +
+            "awareness of the condition as those with it may not realise they have it. It " +
+            "is not a life-threatening condition; however, it can be considered " +
+            "life-altering as it changes how someone would experience the world around " +
+            "them. " +
+          "</p>" +
+        "<p style='font-size: 60%'>" +
+          "It is up to you to decide whether or not to take part. If you do decide to take part you will be given this  +information sheet to keep and be asked to sign a consent form. " +
+          "<br><br>" +
+          "If you have any questions or concerns about the manner in which the study was conducted please, in the first instance, contact the researcher responsible for the study.  If this is unsuccessful, or not appropriate, please contact the Secretary at the Queen Mary Ethics of Research Committee, Room W104, Queen’s Building, Mile End Campus, Mile End Road, London or research-ethics@qmul.ac.uk. " +
+        "</p>"
+        );
+    }
+// Load Purpose of the application tab
+    function appPurpose()
+    {
+      // Remove all active attributes
+      $("#infoSheet").removeClass("active");
+      $("#purpose").removeClass("active");
+      $("#about").removeClass("active");
+      $("#explanation").removeClass("active");
+      // Add active attribute to the currently selected tab
+      $("#purpose").addClass("active");
+      // Empty p tag containing information
+      $("#informationtext").empty();
+      // Append p tag with new information
+      $("#informationtext").append(
+        "<p>" +
+        "The purpose of this application is to help with the identification of chromesthesia. " +
+        "<br><br>" +
+        "The application measures responses, in the form of colour selection, to sounds of varying timbres and pitches. " +
+        "It uses sounds played from 6 instruments played in 3 different pitches." +
+        "<br>" +
+        "The application is used to gather data on responses from multiple people on their colour selections." +
+        "<br><br>" +
+        "<strong>Things to know before starting:</strong>" +
+        "<br>" +
+        "- Each page has a timer of 5 seconds, so make sure you select a colour before the timer runs out" +
+        "<br>" +
+        "- Select the first colour that comes to your mind, there are no right or wrong answers" +
+        "</p>"
+        );
+    }
+// Load What is Chromesthesia? tab
+    function aboutChromesthesia()
+    {
+      // Remove all active attributes
+      $("#infoSheet").removeClass("active");
+      $("#purpose").removeClass("active");
+      $("#about").removeClass("active");
+      $("#explanation").removeClass("active");
+      // Add active attribute to the currently selected tab
+      $("#about").addClass("active");
+      // Empty p tag containing information
+      $("#informationtext").empty();
+      // Append p tag with new information
+      $("#informationtext").append(
+        "<p>" +
+        "Synesthesia is a condition that involves one of the five senses being triggered in response to another sense. " +
+        "<br><br>" +
+        "This application focuses on Chromesthesia, which is a type of synesthesia, and focuses on the responsiveness of sight to sound. " +
+        "<br><br>" +
+        "People with chromesthesia see colours in response to hearing sound. " +
+        "This affects the way they experience sound as the colours they see can change their perception of the sounds they hear. " +
+        "</p>"
+        );
+    }
+// Load How the application works tab
+    function appExplanation()
+    {
+      // Remove all active attributes
+      $("#infoSheet").removeClass("active");
+      $("#purpose").removeClass("active");
+      $("#about").removeClass("active");
+      $("#explanation").removeClass("active");
+      // Add active attribute to the currently selected tab
+      $("#explanation").addClass("active");
+      // Empty p tag containing information
+      $("#informationtext").empty();
+      // Append p tag with new information
+      $("#informationtext").append(
+        "<p>" +
+        "This application consists of 18 different sounds that play for a length of approximately 1 second each. Each sound page consists of one of the 18 sounds and 64 colours which are the same throughout each sound page. " +
+        "<br><br>" +
+        "On loading a sound page, the audio clip plays automatically and a timer is started. After 10 seconds from the page loading, the next sound page is automatically loaded. If no colour is selected before the timer expires then the colour selection is defaulted to white. " +
+        "<br><br>" +
+        "The application requires each user to take two attempts. The two attempts are compared to find the similarity of results. This can be viewed in the results page. " +
+        "</p>"
+        );
+    }
+</script>
+{% endblock %}

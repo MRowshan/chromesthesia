@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+  $(document).ready(function()
+  {
+    setTimeout(function()
+    {
+      sendColour();
+    },4990);
+  });
+
+  $(document).ready(function()
+    {
+      var elem = document.getElementById("progress"); 
+      var width = 0;
+      var id = setInterval(frame, 50);
+      function frame()
+      {
+        if (width >= 100) {
+            clearInterval(id);
+        } else {
+             width++; 
+            elem.style.width = width + '%'; 
+        }
+      }
+    })
+
+  function sendColour()
+      {
+        $.ajax({
+          type: "POST",
+          url: "/sendColourB/",
+          dataType: "json",
+          data: { csrfmiddlewaretoken: '{{csrf_token}}',
+                  sid: $('#sid').val(),  //Sound ID
+                  cid: $('#display').val(), //Hex Value
+            },
+        })
+      }
+
+  function displayColour()
+  {
+    var c = document.body.style.backgroundColor;
+    colour = rgb2hex(c);
+    document.getElementById("display").innerHTML = colour;
+    $('#display').val(colour);
+  }
+
+  function rgb2hex(rgb) 
+  {
+    if (/^#[0-9A-F]{6}$/i.test(rgb)) return rgb;
+
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) 
+    {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  }
+
+  function changeColour(y)
+  {
+    document.body.style.backgroundColor=y;
+    displayColour();
+  }
+
+  window.onload = function()
+  {
+    setTimeout(function()
+    {
+      finalcol = document.getElementById("display").innerHTML;
+      window.location.href = "{% url 'synesthesia:sound16B' %}";
+    }, 5000);
+  };
+
+</script>
+
+<div class="container-fluid">
+
+  <div class="row">
+      <h1 class="page-header soundheader">SOUND #15</h1>
+    </div>
+
+    <div class="row audio">
+      <audio controls autoplay>
+        <source src="/static/sound/subby-bass/subby-bass-c3.mp3" type="audio/mpeg">
+          Your browser does not support the audio element
+      </audio>
+    </div>
+  <hr>
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1"><div class="colour div0"  onclick="changeColour('#ffffff')"></div></div>
+        <div class="col-md-1"><div class="colour div0a" onclick="changeColour('#c2c2c2')"></div></div>
+        <div class="col-md-1"><div class="colour div0b" onclick="changeColour('#3d3d3d')"></div></div>
+        <div class="col-md-1"><div class="colour div0c" onclick="changeColour('#000000')"></div></div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><div class="colour div1a"  onclick="changeColour('#ffc4c4')"></div></div>
+        <div class="col-md-1"><div class="colour div3a"  onclick="changeColour('#ffe5c4')"></div></div>
+        <div class="col-md-1"><div class="colour div5a"  onclick="changeColour('#ffffc4')"></div></div>
+        <div class="col-md-1"><div class="colour div7a"  onclick="changeColour('#e2ffc4')"></div></div>
+        <div class="col-md-1"><div class="colour div9a"  onclick="changeColour('#c4ffc4')"></div></div>
+        <div class="col-md-1"><div class="colour div11a" onclick="changeColour('#c4ffe2')"></div></div>
+        <div class="col-md-1"><div class="colour div13a" onclick="changeColour('#c4ffff')"></div></div>
+        <div class="col-md-1"><div class="colour div15a" onclick="changeColour('#c4e2ff')"></div></div>
+        <div class="col-md-1"><div class="colour div17a" onclick="changeColour('#c4c4ff')"></div></div>
+        <div class="col-md-1"><div class="colour div19a" onclick="changeColour('#e2c4ff')"></div></div>
+        <div class="col-md-1"><div class="colour div21a" onclick="changeColour('#ffc4ff')"></div></div>
+        <div class="col-md-1"><div class="colour div23a" onclick="changeColour('#ffc4e2')"></div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><div class="colour div1b"  onclick="changeColour('#ff8989')"></div></div>
+        <div class="col-md-1"><div class="colour div3b"  onclick="changeColour('#ffcb89')"></div></div>
+        <div class="col-md-1"><div class="colour div5b"  onclick="changeColour('#ffff89')"></div></div>
+        <div class="col-md-1"><div class="colour div7b"  onclick="changeColour('#c4ff89')"></div></div>
+        <div class="col-md-1"><div class="colour div9b"  onclick="changeColour('#89ff89')"></div></div>
+        <div class="col-md-1"><div class="colour div11b" onclick="changeColour('#89ffc4')"></div></div>
+        <div class="col-md-1"><div class="colour div13b" onclick="changeColour('#89ffff')"></div></div>
+        <div class="col-md-1"><div class="colour div15b" onclick="changeColour('#89c4ff')"></div></div>
+        <div class="col-md-1"><div class="colour div17b" onclick="changeColour('#8989ff')"></div></div>
+        <div class="col-md-1"><div class="colour div19b" onclick="changeColour('#c489ff')"></div></div>
+        <div class="col-md-1"><div class="colour div21b" onclick="changeColour('#ff89ff')"></div></div>
+        <div class="col-md-1"><div class="colour div23b" onclick="changeColour('#ff89c4')"></div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><div class="colour div1"  onclick="changeColour('#ff0000')"></div></div>
+        <div class="col-md-1"><div class="colour div3"  onclick="changeColour('#ff8f00')"></div></div>
+        <div class="col-md-1"><div class="colour div5"  onclick="changeColour('#ffff00')"></div></div>
+        <div class="col-md-1"><div class="colour div7"  onclick="changeColour('#80ff00')"></div></div>
+        <div class="col-md-1"><div class="colour div9"  onclick="changeColour('#00ff00')"></div></div>
+        <div class="col-md-1"><div class="colour div11" onclick="changeColour('#00ff80')"></div></div>
+        <div class="col-md-1"><div class="colour div13" onclick="changeColour('#00ffff')"></div></div>
+        <div class="col-md-1"><div class="colour div15" onclick="changeColour('#0080ff')"></div></div>
+        <div class="col-md-1"><div class="colour div17" onclick="changeColour('#0000ff')"></div></div>
+        <div class="col-md-1"><div class="colour div19" onclick="changeColour('#8000ff')"></div></div>
+        <div class="col-md-1"><div class="colour div21" onclick="changeColour('#ff00ff')"></div></div>
+        <div class="col-md-1"><div class="colour div23" onclick="changeColour('#ff0080')"></div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><div class="colour div1c"  onclick="changeColour('#890000')"></div></div>
+        <div class="col-md-1"><div class="colour div3c"  onclick="changeColour('#894d00')"></div></div>
+        <div class="col-md-1"><div class="colour div5c"  onclick="changeColour('#894d00')"></div></div>
+        <div class="col-md-1"><div class="colour div7c"  onclick="changeColour('#458900')"></div></div>
+        <div class="col-md-1"><div class="colour div9c"  onclick="changeColour('#008900')"></div></div>
+        <div class="col-md-1"><div class="colour div11c" onclick="changeColour('#008945')"></div></div>
+        <div class="col-md-1"><div class="colour div13c" onclick="changeColour('#008989')"></div></div>
+        <div class="col-md-1"><div class="colour div15c" onclick="changeColour('#004589')"></div></div>
+        <div class="col-md-1"><div class="colour div17c" onclick="changeColour('#000089')"></div></div>
+        <div class="col-md-1"><div class="colour div19c" onclick="changeColour('#450089')"></div></div>
+        <div class="col-md-1"><div class="colour div21c" onclick="changeColour('#890089')"></div></div>
+        <div class="col-md-1"><div class="colour div23c" onclick="changeColour('#890045')"></div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"><div class="colour div1d"  onclick="changeColour('#3b0000')"></div></div>
+        <div class="col-md-1"><div class="colour div3d"  onclick="changeColour('#3b2100')"></div></div>
+        <div class="col-md-1"><div class="colour div5d"  onclick="changeColour('#3b3b00')"></div></div>
+        <div class="col-md-1"><div class="colour div7d"  onclick="changeColour('#1e3b00')"></div></div>
+        <div class="col-md-1"><div class="colour div9d"  onclick="changeColour('#003b00')"></div></div>
+        <div class="col-md-1"><div class="colour div11d" onclick="changeColour('#003b1e')"></div></div>
+        <div class="col-md-1"><div class="colour div13d" onclick="changeColour('#003b3b')"></div></div>
+        <div class="col-md-1"><div class="colour div15d" onclick="changeColour('#001e3b')"></div></div>
+        <div class="col-md-1"><div class="colour div17d" onclick="changeColour('#00003b')"></div></div>
+        <div class="col-md-1"><div class="colour div19d" onclick="changeColour('#1e003b')"></div></div>
+        <div class="col-md-1"><div class="colour div21d" onclick="changeColour('#3b003b')"></div></div>
+        <div class="col-md-1"><div class="colour div23d" onclick="changeColour('#3b001e')"></div></div>
+      </div>
+      <br><br><br>
+
+      <div class="row" id="colours">
+        <div class="col-md-2">
+          <form method="POST" action="sendColour/">
+            {% csrf_token %}
+            <input  type='text' id='sid' name ='sid' value="{{ sid }}" style="display: none">
+            <p>Colour:</p>
+            <p id='display' name='display'></p>
+          </form>
+        </div>
+        <div class="col-md-8">
+          <div class="progressdiv">
+            <div id="progress" class="progress"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

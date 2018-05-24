@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+<style>
+    .col-md-8, .col-md-4{padding: 10px} /* Applies padding to these classes */
+
+    input[type=text], input[type=password], select /* CSS for input boxes */
+    {
+        width: 100%;
+        padding: 6px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+
+<script>
+    function home() // Load the index method in views.py
+    {
+        window.location.href = "{% url 'synesthesia:index' %}";
+    }
+// Check that all the fields are completed
+    function checkFields()
+    {
+        // Get value from input box with name 'email' in form 'loginForm'
+        var email = document.forms["loginForm"]["email"].value;
+        // remove whitespace
+        var em = email.trim();
+        // Get value from input box with name 'password' in form 'loginForm'
+        var password = document.forms["loginForm"]["password"].value;
+        // remove whitespace
+        var pw = password.trim();
+        
+        // Check if any of the variables are empty (after removing whitespace)
+        if (em == "" || pw == "")
+        {
+            // Alert message if not complete
+            alert("Please complete all the fields");
+            // Return false so the incomplete form does not get submitted
+            return false;
+        }
+        // Input sanitisation - prevent people signing up with these characters
+        if (em.match(/[<>''"",!;,:\]\[]/i) || pw.match(/[<>''"",!;,:\]\[]/i))
+        {
+            alert("Special characters are not allowed")
+            return false;
+        }
+    }
+</script>
+
+<div class="row">
+    <br>
+    <!-- Home button with bootstrap icon -->
+    <button type="button" class="btn btn-default btn-sm homebutton" onclick="home()">
+        <span class="glyphicon glyphicon-home"></span> Home
+    </button>
+    <!-- Page header -->
+    <h1 class="page-header mainheader">Log In</h1>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <!-- Form that uses the function 'login' in views.py -->
+            <form name="loginForm" method="POST" action="/login/" onsubmit="return checkFields()">
+                {% csrf_token %} <!-- CSRF Token to prevent malicious attacks-->
+                <div class="container-fluid" style="text-align: center;">
+                    <br><br><br>
+                    <div class="form-group">
+                        <!-- Error message shows here -->
+                        <div class="row">
+                            <p class="errormessage">{{ error }}</p>
+                        </div>
+                        <!-- Email -->
+                        <div class="row">
+                            <!-- Label -->
+                            <div class="col-md-4">
+                                <h4>Email</h4>
+                            </div>
+                            <!-- Input box for email -->
+                            <div class="col-md-8" style="text-align: center;">
+                                <input class="form-control" type='text' name='email' size="35">
+                            </div>
+                        </div>
+                        <!-- Password -->
+                        <div class="row">
+                            <!-- Label -->
+                            <div class="col-md-4">
+                                <h4>Password</h4>
+                            </div>
+                            <!-- Input box for password -->
+                            <div class="col-md-8" style="text-align: center;">
+                                <input class="form-control" type='password' name='password' size="35">
+                            </div>
+                        </div>
+                        <!-- Login button to submit form -->
+                        <div class="row">
+                            <div class="btn-group btn-group-lg btn-block">
+                                <button type='submit' class="btn btn-primary btn-block">Log In</button>
+                            </div>
+                        </div>
+                        <!-- Sign up button -->
+                        <div class="row">
+                            <p style="text-align: center;">
+                                <br>
+                                Don't have an account? <br>
+                                <!-- Calls function 'signup' in views.py -->
+                                <a href="{% url 'synesthesia:signup' %}"> Sign Up </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

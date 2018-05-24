@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+<style>
+    table, th, td 
+    {
+        border: 1px solid black;
+        padding: 0px;
+    }
+/* https://stackoverflow.com/questions/8232713/how-to-display-scroll-bar-onto-a-html-table */
+    #table-wrapper 
+    {
+        position:relative;
+    }
+    #table-scroll 
+    {
+        height:386px;
+        overflow:auto;  
+        margin-top:20px;
+    }
+    #table-wrapper table 
+    {
+        width:100%;
+    }
+</style>
+
+<div class="row">
+    <br>
+    <!-- Home button with bootstrap icon -->
+    <button type="button" class="btn btn-default btn-sm homebutton" onclick="home()">
+        <span class="glyphicon glyphicon-home"></span> Home
+    </button>
+    <!-- Page header -->
+    <h1 class="page-header mainheader">Admin Page</h1>
+</div>
+
+<div class="row">
+    <div id="displayinfo" class="col-md-8">
+        <div id="table-wrapper">
+            <div id="table-scroll">
+                <!-- For loop through getusers array -->
+                <table>
+                    {% for users in getusers %}
+                    <tr>
+                        <!-- Print each value of users -->
+                        <td><button id="selectUE" type="submit" class="btn">{{ users }}</button></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="vertical" data-theme="light" data-vanity="mustakim-rowshan-172318115"><a class="LI-simple-link" href='https://uk.linkedin.com/in/mustakim-rowshan-172318115?trk=profile-badge'>Mustakim Rowshan</a></div>
+    </div>
+</div>
+
+<div class="row" style="position: absolute; bottom: 5%">
+    <div class="col-md-12">
+        <form method="POST" action="/getcolour/">
+            {% csrf_token %}
+            <input id="uemail" type='text' name='ue' value="" size="60">
+            <div class="btn">
+                <input type='submit' class="btn btn-primary btn-block" value="Confirm">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- Load ajax library-->
+<script>
+    function home() // Load the index method in views.py
+    {
+        window.location.href = "{% url 'synesthesia:userhome' %}";
+    }
+
+    $("button").click(function() 
+    {
+        $('#uemail').empty();
+        var useremail = $(this).text();
+        $('#uemail').val(useremail);
+    });
+</script>
+{% endblock %}

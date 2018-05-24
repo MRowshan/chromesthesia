@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/stylesheet.css">
+<style>
+    .col-md-8, .col-md-4, .col-md-6, .col-md-2 {padding: 10px} /* Applies padding to these classes */
+
+    input[type=text], input[type=password], select /* CSS for input boxes */
+    {
+        width: 100%;
+        padding: 6px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+<!-- Import ajax library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+// // Load options to age selector
+//     $(document).ready(function()
+//     {
+//         var age = ''; // Create variable to store line in
+//         for (i=1;   i<=100; i++) // Run from 1 to 100 and increment by 1
+//         {
+//             // Creates options 1 to 100 for the selection box
+//             age += '<option value=' + i + '>' + i + '</option>';
+//         }
+//         // Add another option for above 100
+//         age += '<option value=above100> above 100 </option>';
+//         // Append options to select tag
+//         $('#age').append(age);
+//     });
+// Load the userhome method in views.py
+	function cancel()
+    {
+        window.location.href = "{% url 'synesthesia:userhome' %}";
+    }
+// Update firstname
+    function editFirstname()
+    {
+        // Get input box with id 'firstname' and remove the readonly attribute to make it editable
+    	document.getElementById("firstname").removeAttribute("readonly");
+        // Remove the button with id 'editFN'
+    	$("#editFN").remove();
+        // Create a new button to save and call the saveFN method
+    	var newButton = $('<button type="button" id="saveFN" class="btn btn-success btn-sm" onclick="saveFN()">Save</button>');
+        // Append the new button to the 'editButtonFN' div class
+    	$("#editButtonFN").append(newButton);
+    }
+// Save firstname
+    function saveFN()
+    {
+        var fname = $('#firstname').val();
+        var fnm = fname.trim();
+        if (fnm == "")
+        {
+            // Alert message if not complete
+            alert("Please do not leave blank");
+            // Return false so the incomplete form does not get submitted
+            return false;
+        }
+        if (fnm.match(/[<>''"",!;,:\]\[]/i))
+        {
+            alert("Special characters are not allowed");
+            return false;
+        }
+    	$.ajax(
+    	{
+            type: "POST", // HTTP POST request
+            url: "/saveFN/", // uses function 'saveFN' in views.py
+            dataType: "json", // Json request
+            // Data sent, csrf token for security and firstname
+            data: { csrfmiddlewaretoken: '{{csrf_token}}', fn: $('#firstname').val() },
+            // If ajax request is successful, run the function
+            success: function()
+            {
+                // Removes the 'saveFN' button
+               	$("#saveFN").remove();
+                // Replace the save button with the edit button
+    	        var newButton = $('<button type="button" id="editFN" class="btn btn-info btn-sm" onclick="editFirstname()">Edit</button>'); 
+                // Append the new button to the 'editButtonFN' div class
+    	        $("#editButtonFN").append(newButton);
+                // Add the readonly attribute back to the input box
+    	        document.getElementById("firstname").setAttribute("readonly", "");
+            }
+        })
+    }
+// Update surname
+    function editSurname()
+    {
+    	document.getElementById("surname").removeAttribute("readonly");
+    	$("#editSN").remove();
+    	var newButton = $('<button type="button" id="saveSN" class="btn btn-success btn-sm" onclick="saveSN()">Save</button>');
+    	$("#editButtonSN").append(newButton);
+    }
+// Save surname
+    function saveSN()
+    {
+        var sname = $('#surname').val();
+        var snm = sname.trim();
+        if (snm == "")
+        {
+            // Alert message if not complete
+            alert("Please do not leave blank");
+            // Return false so the incomplete form does not get submitted
+            return false;
+        }
+        if (snm.match(/[<>''"",!;,:\]\[]/i))
+        {
+            alert("Special characters are not allowed");
+            return false;
+        }
+    	$.ajax(
+    	{
+            type: "POST",
+            url: "/saveSN/",
+            dataType: "json",
+            data: { csrfmiddlewaretoken: '{{csrf_token}}', sn: $('#surname').val() },
+            
+            success: function()
+            {
+               	$("#saveSN").remove();
+    	        var newButton = $('<button type="button" id="editSN" class="btn btn-info btn-sm" onclick="editSurname()">Edit</button>');
+    	        $("#editButtonSN").append(newButton);
+    	        document.getElementById("surname").setAttribute("readonly", "");
+            }
+        })
+    }
+// Update age
+    function editAge()
+    {
+    	document.getElementById("age").removeAttribute("disabled");
+    	$("#editAge").remove();
+    	var newButton = $('<button type="button" id="saveAge" class="btn btn-success btn-sm" onclick="saveAge()">Save</button>');
+    	$("#editButtonAge").append(newButton);
+    }
+// Save age
+    function saveAge()
+    {
+    	$.ajax(
+    	{
+            type: "POST",
+            url: "/saveAge/",
+            dataType: "json",
+            data: { csrfmiddlewaretoken: '{{csrf_token}}', age: $('#age').val() },
+            
+            success: function()
+            {
+               	$("#saveAge").remove();
+    	        var newButton = $('<button type="button" id="editAge" class="btn btn-info btn-sm" onclick="editAge()">Edit</button>');
+    	        $("#editButtonAge").append(newButton);
+    	        document.getElementById("age").setAttribute("disabled", "");
+            }
+        })
+    }
+// Update gender
+    function editGender()
+    {
+    	document.getElementById("gender").removeAttribute("disabled");
+    	$("#editG").remove();
+    	var newButton = $('<button type="button" id="saveG" class="btn btn-success btn-sm" onclick="saveG()">Save</button>');
+    	$("#editButtonG").append(newButton);
+    }
+// Save gender
+    function saveG()
+    {
+    	$.ajax(
+    	{
+            type: "POST",
+            url: "/saveG/",
+            dataType: "json",
+            data: { csrfmiddlewaretoken: '{{csrf_token}}', g: $('#gender').val() },
+            
+            success: function()
+            {
+               	$("#saveG").remove();
+    	        var newButton = $('<button type="button" id="editG" class="btn btn-info btn-sm" onclick="editGender()">Edit</button>');
+    	        $("#editButtonG").append(newButton);
+    	        document.getElementById("gender").setAttribute("disabled", "");
+            }
+        })
+    }
+// Update dominant hand
+    function editDominantHand()
+    {
+    	document.getElementById("dominanthand").removeAttribute("disabled");
+    	$("#editDH").remove();
+    	var newButton = $('<button type="button" id="saveDH" class="btn btn-success btn-sm" onclick="saveDH()">Save</button>');
+    	$("#editButtonDH").append(newButton);
+    }
+// Save dominant hand
+    function saveDH()
+    {
+    	$.ajax(
+    	{
+            type: "POST",
+            url: "/saveDH/",
+            dataType: "json",
+            data: { csrfmiddlewaretoken: '{{csrf_token}}', dh: $('#dominanthand').val() },
+            
+            success: function()
+            {
+               	$("#saveDH").remove();
+    	        var newButton = $('<button type="button" id="editDH" class="btn btn-info btn-sm" onclick="editDominantHand()">Edit</button>');
+    	        $("#editButtonDH").append(newButton);
+    	        document.getElementById("dominanthand").setAttribute("disabled", "");
+            }
+        })
+    }
+// Update password
+    function editPassword()
+    {
+        // Get input box with id 'password' and remove the readonly attribute to make it editable
+        document.getElementById("password").removeAttribute("readonly");
+        // Add a placeholder to the input box with id 'password'
+        document.getElementById("password").setAttribute("placeholder", "Enter Current Password");
+        // Remove the button with id 'editP'
+        $("#editP").remove();
+        // Create a new button to check password and call the checkP method
+        var newButton = $('<button type="button" id="checkP" class="btn btn-warning btn-sm" onclick="checkP()">Check</button>');
+        // Append the new button to the 'editButtonP' div class
+        $("#editButtonP").append(newButton);
+    }
+// Check password
+    function checkP()
+    {
+        $.ajax(
+        {
+            type: "POST", // HTTP POST request
+            url: "/checkP/", // uses function 'checkP' in views.py
+            dataType: "json", // Json request
+            // Data sent, csrf token for security and password
+            data: { csrfmiddlewaretoken: '{{csrf_token}}', p: $('#password').val() },
+            // If ajax request is successful, run the function
+            success: function(data)
+            {
+                if (data.check == "Correct") // If variable passed by JsonResponse matches the string 'correct'
+                {
+                    // Remove the button with id 'checkP'
+                    $("#checkP").remove();
+                    // Create a new button to save password and call the saveP method
+                    var newButton = $('<button type="button" id="saveP" class="btn btn-success btn-sm" onclick="saveP()">Save</button>');
+                    // Append the new button to the 'editButtonP' div class
+                    $("#editButtonP").append(newButton);
+                    // Empty the div class with id 'passwordInput'
+                    $("#passwordInput").empty();
+                    // Create two new input boxes
+                    $("#passwordInput").append('<input class="form-control" type="password" name="password1" id="password1" size="35" placeholder="Enter New Password">');
+                    $("#passwordInput").append('<input class="form-control" type="password" name="password2" id="password2" size="35" placeholder="Confirm New Password">');
+                }
+                else // If variable passed by JsonResponse doesn't match the string 'correct'
+                {
+                    // Add the error message passed by the JsonResponse to the div class with id 'passwordInput'
+                    $("#passwordInput").append('<p id="check" style="color: red">'+data.check+'</p>');
+                }
+            }
+        })
+    }
+// Save password
+    function saveP()
+    {
+        var pword1 = $('#password1').val();
+        var pword2 = $('#password2').val();
+        var pw1 = pword1.trim();
+        var pw2 = pword2.trim();
+        if (pw1 == "" || pw2 == "")
+        {
+            // Alert message if not complete
+            alert("Please do not leave blank");
+            // Return false so the incomplete form does not get submitted
+            return false;
+        }
+        if (pw1.match(/[<>''"",!;,:\]\[]/i) || pw2.match(/[<>''"",!;,:\]\[]/i))
+        {
+            alert("Special characters are not allowed");
+            return false;
+        }
+        p1 = $('#password1').val() // Store value from input box with id 'password1'
+        p2 = $('#password2').val() // Store value from input box with id 'password2'
+        if (p1 == p2) // Check if passwords match
+        {
+            // If the passwords match, post the value from one of the input boxes
+            $.ajax(
+            {
+                type: "POST",
+                url: "/saveP/",
+                dataType: "json",
+                data: { csrfmiddlewaretoken: '{{csrf_token}}', p: $('#password2').val() },
+                // If ajax request is successful, run the function
+                success: function()
+                {
+                    // Remove the button with id 'saveP'
+                    $("#saveP").remove();
+                    // Replace the save button with the edit button
+                    var newButton = $('<button type="button" id="editP" class="btn btn-info btn-sm" onclick="editPassword()">Edit</button>');
+                    // Append the new button to the 'editButtonFN' div class
+                    $("#editButtonP").append(newButton);
+                    // Remove input boxes and replace with original, uneditable input box
+                    $("#passwordInput").empty();
+                    $("#passwordInput").append('<input class="form-control" type="password" name="password" id="password" size="35" placeholder="Password" readonly="">');
+                }
+            })
+        }
+        else // If the passwords do not match
+        {
+            // Add this error message to div with id 'passwordInput'
+            $("#passwordInput").append('<p id="check" style="color: red">Passwords do not match</p>');
+        }
+    }
+</script>
+<div class="row">
+    <br>
+    <!-- Cancel button with bootstrap icon -->
+    <button type="button" class="btn btn-danger btn-sm homebutton" onclick="cancel()">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <!-- Page header -->
+    <h1 class="page-header mainheader">Edit Profile</h1>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="container-fluid">
+                <br><br><br>
+                <!-- Form for editing profile information -->
+            	<div class="form-group">
+                    <!-- Edit firstname -->
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-3">
+                            <h4>First Name</h4>
+                        </div>
+                        <!-- Input box to show current firstname value -->
+                        <div class="col-md-7" align="center">
+                            <input class="form-control" type='text' name='firstname' id="firstname" size="35" value="{{ firstname }}" readonly="">
+                        </div>
+                        <!-- Edit button to make input box editable -->
+                        <div class="col-md-2" align="center" id="editButtonFN">
+                            <button type='button' id="editFN" class="btn btn-info btn-sm" onclick="editFirstname()">Edit</button>
+                        </div>
+                    </div>
+                    <!-- Edit surname -->
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-3">
+                            <h4>Surname</h4>
+                        </div>
+                        <!-- Input box to show current surname value -->
+                        <div class="col-md-7" align="center">
+                            <input class="form-control" type='text' name='surname' id="surname" size="35" value="{{ surname }}" readonly="">
+                        </div>
+                        <!-- Edit button to make input box editable -->
+                        <div class="col-md-2" align="center" id="editButtonSN">
+                            <button type='button' id="editSN" class="btn btn-info btn-sm" onclick="editSurname()">Edit</button>
+                        </div>
+                    </div>
+                    <!-- Edit age -->
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-3">
+                            <h4>Age</h4>
+                        </div>
+                        <!-- Selection box that shows current age value and holds other options -->
+                        <div class="col-md-7" align="center">
+                            <select class="form-control" name="age" id="age" disabled="">
+                            	<option value="{{ age }}" selected hidden>{{ age }}</option>
+                                <option value="0-15">0-15</option>
+                                <option value="16-25">16-25</option>
+                                <option value="26-35">26-35</option>
+                                <option value="36-45">36-45</option>
+                                <option value="46-55">46-55</option>
+                                <option value="56-65">56-65</option>
+                                <option value="65+">65+</option>
+                            </select>
+                        </div>
+                        <!-- Edit button that makes selection box editable -->
+                        <div class="col-md-2" align="center" id="editButtonAge">
+                            <button type='button' id="editAge" class="btn btn-info btn-sm" onclick="editAge()">Edit</button>
+                        </div>
+                    </div>
+                    <!-- Edit age -->
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-3">
+                            <h4>Gender</h4>
+                        </div>
+                        <!-- Selection box that shows current gender value and holds other options -->
+                        <div class="col-md-7" align="center">
+                            <select class="form-control" name="gender" id="gender" disabled="">
+                            	<option value="{{ gender }}" selected hidden>{{ gender }}</option>
+                            	<option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <!-- Edit button that makes selection box editable -->
+                        <div class="col-md-2" align="center" id="editButtonG">
+                            <button type='button' id="editG" class="btn btn-info btn-sm" onclick="editGender()">Edit</button>
+                        </div>
+                    </div>
+                    <!-- Edit age -->
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-3">
+                            <h4>Dominant Hand</h4>
+                        </div>
+                        <!-- Selection box that shows current dominanthand value and holds other options -->
+                        <div class="col-md-7" align="center">
+                            <select class="form-control" name="dominanthand" id="dominanthand" disabled="">
+                            	<option value="{{ dominanthand }}" selected hidden>{{ dominanthand }}</option>
+                            	<option value="Right">Right</option>
+                                <option value="Left">Left</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <!-- Edit button that makes selection box editable -->
+                        <div class="col-md-2" align="center" id="editButtonDH">
+                            <button type='button' id="editDH" class="btn btn-info btn-sm" onclick="editDominantHand()">Edit</button>
+                        </div>
+                    </div>
+                    <!-- Edit age -->
+                    <div class="row">
+                        <!-- Label -->
+                        <div class="col-md-3">
+                            <h4>Password</h4>
+                        </div>
+                        <!-- Input box which has a placeholder rather than showing the current password -->
+                        <div class="col-md-7" align="center" id="passwordInput">
+                            <input class="form-control" type='password' name='password' id="password" size="35" placeholder="Password" readonly="">
+                        </div>
+                        <!-- Edit button to make input box editable -->
+                        <div class="col-md-2" align="center" id="editButtonP">
+                            <button type='button' id="editP" class="btn btn-info btn-sm" onclick="editPassword()">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
