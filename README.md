@@ -28,4 +28,4 @@ The 'templates' folder contains all frontend files
 
 The application is available online. It can be found using the link below:
 ==========================================================================
-http://chromesthesia-mr320.apps.devcloud.eecs.qmul.ac.uk/
+http://chromesthesia-mr320.apps.devcloud.eecs.qmul.ac.uk/ --> No longer available
